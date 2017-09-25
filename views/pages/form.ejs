@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>3Things - Add secrets</title>
+		<link rel = "stylesheet" href = "/css/main.css" type = "text/css" />
+		<script type = "text/javascript" src = "/scripts/jquery.js"></script>
+	</head>
+	<body>
+		<div class = "secretstatus">
+			Number of submitted secrets: <span id = "submissions"><%= get(messages.submissions, 0) %></span>
+		</div>
+		<div class = "messagebox <%= ifExists(messages.info, '', 'hidden') %><%= ifExists(messages.error, 'error', '') %>">
+			<%= get(messages.info, '') %>
+		</div>
+		
+		<form name = "addsecretform" method = "POST" action = "#">
+			<input type = "text" name = "name" id = "nameinput" placeholder = "Your name goes here">
+			<textarea name = "secret" placeholder = "The secret goes here!"></textarea>
+			<input type = "submit" value = "Submit it!">
+		</form>
+		
+		<script type = "text/javascript">
+			/* Update number of secrets if needed */
+			$('#nameinput').blur(function(){
+				$.post('/nbrofsecrets', {name: $('#nameinput').val()}, function(data){
+					$('#submissions').html(data.secrets);
+				});
+			});
+		</script>
+	</body>
+</html>
