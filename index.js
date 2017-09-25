@@ -43,6 +43,7 @@ app.post('/form', function(req, res, next){
 		if(result.error){
 			req.flash('error', true);
 		}else{
+			req.flash('name', result.name);
 			req.flash('submissions', result.secrets);
 		}
 		res.redirect('/form');

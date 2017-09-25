@@ -15,7 +15,7 @@
 		</div>
 		
 		<form name = "addsecretform" method = "POST" action = "#">
-			<input type = "text" name = "name" id = "nameinput" placeholder = "Your name goes here">
+			<input type = "text" name = "name" id = "nameinput" placeholder = "Your name goes here" value = "<%= get(messages.name, '') %>">
 			<textarea name = "secret" placeholder = "The secret goes here!"></textarea>
 			<input type = "submit" value = "Submit it!">
 		</form>

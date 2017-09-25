@@ -14,7 +14,7 @@ exports.registerSecret = function(name, secret, callback){
 			}
 		}
 		
-		getNumberOfSecrets(name, callback);
+		exports.getNumberOfSecrets(name, callback);
 	});
 };
 
@@ -22,7 +22,7 @@ exports.getNumberOfSecrets = function(name, callback){
 	if(name){
 		db.query("SELECT count(id) AS count FROM secrets WHERE user_id = getUserId(?)", [name], function(result){
 			if(callback){
-				callback(result.error ? {error: true} : {secrets: result[0].count});
+				callback(result.error ? {error: true} : {name: name, secrets: result[0].count});
 			}
 		});
 	}else{
