@@ -66,11 +66,13 @@ exports.getPrettyRounds = function(callback){
 			callback({error:true});
 		}else{
 			var output = "";
+			var roundNumber = 1;
 			for(var i = 0; i<result.length; i += roundSize){
 				var round = result.slice(i, i+roundSize);
-				output += "Runda "+round[0].round+": "+util.shuffleArray(round.map(function(el){return el.name;})).join(', ')+"\n";
+				output += "Runda "+roundNumber+": "+util.shuffleArray(round.map(function(el){return el.name;})).join(', ')+"\n";
 				output += round.map(function(el, index){return (index+1)+". "+el.secret;}).join("\n")+"\n\n";
-				output += "Facit (Runda "+round[0].round+"): "+round.map(function(el, index){return (index+1)+". "+el.name;}).join(", ")+"\n\n\n";
+				output += "Facit (Runda "+roundNumber+"): "+round.map(function(el, index){return (index+1)+". "+el.name;}).join(", ")+"\n\n\n";
+				roundNumber++;
 			}
 			callback({data: output});
 		}
