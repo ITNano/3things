@@ -76,3 +76,7 @@ exports.getPrettyRounds = function(callback){
 		}
 	});
 };
+
+exports.resetRounds = function(){
+	db.query("DELETE FROM rounds");
+};

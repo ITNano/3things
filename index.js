@@ -79,6 +79,11 @@ app.get('/rounds', function(req, res, next){
 	});
 });
 
+app.get('/reset', function(req, res, next){
+	model.resetRounds();
+	res.redirect('/emelie');
+});
+
 
 server.listen(1776, function(){
 	console.log('Server started. Port 1776');
