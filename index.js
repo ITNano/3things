@@ -73,6 +73,12 @@ app.post('/setround', function(req, res, next){
 	});
 });
 
+app.get('/rounds', function(req, res, next){
+	model.getPrettyRounds(function(result){
+		res.send(result.error ? 'A problem occured while exporting the data' : result.data);
+	});
+});
+
 
 server.listen(1776, function(){
 	console.log('Server started. Port 1776');

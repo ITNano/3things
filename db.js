@@ -36,6 +36,7 @@ exports.query = function(query, data, options){
 				options.onError(error);
 			}else{
 				console.log('oops, error!');
+				console.log(error);
 			}
 		}else{
 			if(options && options.onSuccess){

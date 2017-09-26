@@ -42,15 +42,21 @@ textarea{
 /* ************** ADMIN PAGE **************** */
 #statements{
 	float:left;
+	min-width:70%;
 	width:70%;
+	height:100%;
 }
 
 #makequestion{
-	position: relative;
-	top: 30%;
-	transform: translateY(-50%);
 	float:left;
 	width:30%;
+	height:100%;
+}
+#output{
+	max-width:90%;
+	width:90%;
+	min-height:400px;
+	overflow:auto;
 }
 
 
@@ -89,7 +95,6 @@ textarea{
 	margin:auto;
 }
 .optionlists{
-	width:400px;
 	margin-top:10px;
 }
 .option{

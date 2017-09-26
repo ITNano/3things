@@ -1,8 +1,10 @@
 /* ****************************************************************************************** */
 /* **********  Should be the model for the 3things project, to be implemented  ************** */
 /* ****************************************************************************************** */
-var db = require('./db');
+var db = require('./db'), util = require('./util');
 db.connect('localhost', '3things', 'to_be_decided', '3things');
+var occasion = 1;
+var roundSize = 3;
 
 
 exports.registerSecret = function(name, secret, callback){
@@ -51,10 +53,26 @@ exports.getSecrets = function(pw, callback){
 };
 
 exports.setRound = function(secretIds, callback){
-	if(secretIds.length == 3){
-		var occasion = 1;
+	if(secretIds.length == roundSize){
 		db.query("INSERT INTO rounds (occasion_id, round, secret_id) VALUES (?, @roundnum := getNewRound(), ?), (?, @roundnum, ?), (?, @roundnum, ?)", [occasion, secretIds[0], occasion, secretIds[1], occasion, secretIds[2]], callback);
 	}else{
 		callback({error: true});
 	}
+};
+
+exports.getPrettyRounds = function(callback){
+	db.query("SELECT R.round AS round, S.secret AS secret, U.name AS name FROM rounds R LEFT JOIN secrets S on R.secret_id = S.id LEFT JOIN users U ON S.user_id = U.id WHERE R.occasion_id = ? ORDER BY R.round ASC, S.secret ASC", [occasion], function(result){
+		if(result.error){
+			callback({error:true});
+		}else{
+			var output = "";
+			for(var i = 0; i<result.length; i += roundSize){
+				var round = result.slice(i, i+roundSize);
+				output += "Runda "+round[0].round+": "+util.shuffleArray(round.map(function(el){return el.name;})).join(', ')+"\n";
+				output += round.map(function(el, index){return (index+1)+". "+el.secret;}).join("\n")+"\n\n";
+				output += "Facit (Runda "+round[0].round+"): "+round.map(function(el, index){return (index+1)+". "+el.name;}).join(", ")+"\n\n\n";
+			}
+			callback({data: output});
+		}
+	});
 };
