@@ -1,8 +1,14 @@
-<div class = "user">
-	<div class = "username">
-		<%= user.name %>
+<% if(!user.secrets.every(function(el){return el.used;})){ %>
+	<div class = "userwrapper">
+		<div class = "user">
+			<div class = "username">
+				<%= user.name %>
+			</div>
+			<div class = "secrets dragula-container">
+				<% user.secrets.forEach(function(secret){ %>
+					<%- include('../partials/secret', {secret: secret}); %>
+				<% }); %>
+			</div>
+		</div>
 	</div>
-	<% user.secrets.forEach(function(secret){ %>
-		<%- include('../partials/secret', {secret: secret}); %>
-	<% }); %>
-</div>
+<% } %>

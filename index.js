@@ -23,6 +23,10 @@ app.use(function(req, res, next){
 	res.locals.ifExists = function(param, onExist, onNotExist){
 		return res.locals.get(param) ? onExist : onNotExist;
 	};
+	
+	res.locals.ifValue = function(param, onTrue, onFalse){
+		return param ? onTrue : onFalse;
+	};
 	next();
 });
 
@@ -60,6 +64,12 @@ app.post('/nbrofsecrets', function(req, res, next){
 app.get('/emelie', function(req, res, next){
 	model.getSecrets('lämna tomt', function(result){
 		res.render('admin', {users: result});
+	});
+});
+
+app.post('/setround', function(req, res, next){
+	model.setRound(req.body.secrets, function(result){
+		res.send(result.error ? 'There was an error creating the round' : 'Yay, the round was created');
 	});
 });
 

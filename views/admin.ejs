@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<%- include('partials/includes.ejs') %>
+		<link rel = "stylesheet" href = "/css/dragula.css" type = "text/css" />
 		<title>3Things - Administer stuff</title>
 	</head>
 	<body>
@@ -12,11 +13,86 @@
 		</div>
 		
 		<div id = "makequestion">
-			<div class = "messagebox <%= ifExists(messages.info, '', 'hidden') %><%= ifExists(messages.error, 'error', '') %>">
-				<%= get(messages.info, '') %>
+			<div class = "messagewrapper">
+				<div class = "messagebox <%= ifExists(messages.info, '', 'hidden') %><%= ifExists(messages.error, 'error', '') %>">
+					<%= get(messages.info, '') %>
+				</div>
 			</div>
 			
-			
+			<div class = "optionlists">
+				<div class = "option">
+					<div class = "optionlisthead">Option 1</div>
+					<div class = "optionlist dragula-container"></div>
+				</div>
+				
+				<div class = "option">
+					<div class = "optionlisthead">Option 2</div>
+					<div class = "optionlist dragula-container"></div>
+				</div>
+				
+				<div class = "option">
+					<div class = "optionlisthead">Option 3</div>
+					<div class = "optionlist dragula-container"></div>
+				</div>
+				<input type = "button" id = "submitButton" value = "Create question" onclick = "generateQuestion();" disabled>
+			</div>
 		</div>
+		
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js'></script>
+		<script type = "text/javascript">
+			var drake = dragula({
+				isContainer: function(el){
+					return el.classList.contains('dragula-container');
+				},
+				invalid: function(el, handle){
+					return el.parentNode.classList.contains('disabled');
+				},
+				accepts: function(el, target, source, sibling){
+					return target.classList.contains('optionlist') && target.children.length <= 1;
+				},
+				copy: function(el, source){
+					return true;
+				},
+				revertOnSpill: true
+			});
+			drake.on('drop', function(el, target, source, sibling){
+				$(source).find('[secretId='+$(el).attr('secretId')+']').addClass('hidden');
+				if(!source.classList.contains('optionlist')){
+					source.classList.add('disabled');
+				}
+				evaluateProgress();
+			});
+			drake.on('out', function(el, container, source){
+				if(source.classList.contains('optionlist')){
+					drake.cancel(false);
+					var id = $(el).attr('secretId');
+					$('#secret_'+id).removeClass('hidden').parent().removeClass('disabled');
+					evaluateProgress();
+				}
+			});
+			
+			function generateQuestion(){
+				var secrets = [];
+				$('.optionlist .secret').each(function(){
+					secrets.push($(this).attr('secretId'));
+				});
+				
+				$('#submitButton').attr('disabled', 'true');
+				$('.optionlist .secret').remove();
+				$('.secrets').removeClass('disabled');
+				
+				$.post('/setround', {secrets: secrets}, function(result){
+					$('.messagebox').removeClass('hidden').html(result);
+				});
+			}
+			
+			function evaluateProgress(){
+				if($('.optionlist .secret').length == $('.optionlist').length){
+					$('#submitButton').removeAttr('disabled');
+				}else{
+					$('#submitButton').attr('disabled', 'true');
+				}
+			}
+		</script>
 	</body>
 </html>

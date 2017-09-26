@@ -40,10 +40,27 @@ textarea{
 }
 
 /* ************** ADMIN PAGE **************** */
+#statements{
+	float:left;
+	width:70%;
+}
+
+#makequestion{
+	position: relative;
+	top: 30%;
+	transform: translateY(-50%);
+	float:left;
+	width:30%;
+}
+
+
+.userwrapper{
+	float:left;
+	width:50%;
+}
 .user{
 	padding:10px;
 	margin:6px 0px 10px 0px;
-	max-width: 500px;
 }
 .username{
 	font-weight:bold;
@@ -54,6 +71,36 @@ textarea{
 	padding: 4px 10px;
 	margin-bottom:5px;
 	border:1px dashed #ddd;
+	cursor:move;
+}
+.secret.hidden{
+	display:none;
+}
+.secrets.disabled{
+	opacity:0.6;
+}
+
+.messagewrapper{
+	margin-left:20px;
+	width:360px;
+}
+.messagebox{
+	max-width: 90%;
+	margin:auto;
+}
+.optionlists{
+	width:400px;
+	margin-top:10px;
+}
+.option{
+	width:90%;
+	margin:auto;
+	margin-bottom:10px;
+}
+.optionlist{
+	border:1px solid #bbb;
+	padding-top:5px;
+	min-height:35px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -61,5 +108,17 @@ textarea{
 		margin-right:auto;
 		margin-left:auto;
 		width:90%;
+	}
+	
+	#statements{
+		float:none;
+		width:100%;
+	}
+
+	#makequestion{
+		position: static;
+		transform: none;
+		float:none;
+		width:100%;
 	}
 }
