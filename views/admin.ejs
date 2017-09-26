@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<%- include('partials/includes.ejs') %>
+		<title>3Things - Administer stuff</title>
+	</head>
+	<body>
+		
+		<div id = "statements">
+			<% users.forEach(function(user){ %>
+				<%- include('partials/user', {user: user}); %>
+			<% }); %>
+		</div>
+		
+		<div id = "makequestion">
+			<div class = "messagebox <%= ifExists(messages.info, '', 'hidden') %><%= ifExists(messages.error, 'error', '') %>">
+				<%= get(messages.info, '') %>
+			</div>
+			
+			
+		</div>
+	</body>
+</html>

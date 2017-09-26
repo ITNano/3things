@@ -33,7 +33,7 @@ app.get('/', function(req, res, next){
 });
 
 app.get('/form', function(req, res, next){
-	res.render('pages/form', {});
+	res.render('form', {});
 });
 
 app.post('/form', function(req, res, next){
@@ -58,7 +58,9 @@ app.post('/nbrofsecrets', function(req, res, next){
 });
 
 app.get('/emelie', function(req, res, next){
-	res.send('Eh, not really implemented yet');
+	model.getSecrets('lämna tomt', function(result){
+		res.render('admin', {users: result});
+	});
 });
 
 

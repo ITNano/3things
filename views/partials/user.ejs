@@ -1,0 +1,8 @@
+<div class = "user">
+	<div class = "username">
+		<%= user.name %>
+	</div>
+	<% user.secrets.forEach(function(secret){ %>
+		<%- include('../partials/secret', {secret: secret}); %>
+	<% }); %>
+</div>

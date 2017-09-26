@@ -38,3 +38,28 @@ textarea{
 .messagebox.hidden{
 	display:none;
 }
+
+/* ************** ADMIN PAGE **************** */
+.user{
+	padding:10px;
+	margin:6px 0px 10px 0px;
+	max-width: 500px;
+}
+.username{
+	font-weight:bold;
+	margin-bottom:6px;
+	padding-left: 10px;
+}
+.secret{
+	padding: 4px 10px;
+	margin-bottom:5px;
+	border:1px dashed #ddd;
+}
+
+@media only screen and (max-width: 768px) {
+	.user{
+		margin-right:auto;
+		margin-left:auto;
+		width:90%;
+	}
+}

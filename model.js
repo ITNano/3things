@@ -29,3 +29,23 @@ exports.getNumberOfSecrets = function(name, callback){
 		callback({secrets: 0});
 	}
 };
+
+exports.getSecrets = function(pw, callback){
+	if(pw == 'lämna tomt'){
+		db.query("SELECT U.name AS name, S.id AS secretId, S.secret AS secret FROM secrets S LEFT JOIN users U ON U.id = S.user_id ORDER BY U.name ASC", [], function(result){
+			var res = [];
+			var currentUser = '';
+			for(var i = 0; i<result.length; i++){
+				if(result[i].name != currentUser){
+					currentUser = result[i].name;
+					res.push({name: result[i].name, secrets: []});
+				}
+				res[res.length-1].secrets.push({id: result[i].secretId, text: result[i].secret});
+			}
+			
+			callback(res);
+		});
+	}else{
+		callback({error: true});
+	}
+};
